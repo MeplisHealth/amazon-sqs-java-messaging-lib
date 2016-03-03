@@ -19,15 +19,14 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import javax.jms.JMSException;
-
-import com.amazon.sqs.javamessaging.AmazonSQSMessagingClientWrapper;
-import com.amazon.sqs.javamessaging.SQSSession;
 import com.amazon.sqs.javamessaging.acknowledge.AcknowledgeMode;
 import com.amazon.sqs.javamessaging.acknowledge.SQSMessageIdentifier;
 import com.amazon.sqs.javamessaging.message.SQSMessage;
 import com.amazonaws.services.sqs.model.DeleteMessageBatchRequest;
+
 import junit.framework.Assert;
+
+import javax.jms.JMSException;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -91,10 +90,10 @@ public class RangedAcknowledgerTest extends AcknowledgerCommon {
         assertEquals(baseQueueUrl + 1, argumentCaptor.getAllValues().get(1).getQueueUrl());
         assertEquals(10, argumentCaptor.getAllValues().get(1).getEntries().size());
 
-        assertEquals(baseQueueUrl + 1, argumentCaptor.getAllValues().get(2).getQueueUrl());
+        assertEquals(baseQueueUrl + 0, argumentCaptor.getAllValues().get(2).getQueueUrl());
         assertEquals(1, argumentCaptor.getAllValues().get(2).getEntries().size());
 
-        assertEquals(baseQueueUrl + 0, argumentCaptor.getAllValues().get(3).getQueueUrl());
+        assertEquals(baseQueueUrl + 1, argumentCaptor.getAllValues().get(3).getQueueUrl());
         assertEquals(1, argumentCaptor.getAllValues().get(3).getEntries().size());
 
         assertEquals(baseQueueUrl + 2, argumentCaptor.getAllValues().get(4).getQueueUrl());
