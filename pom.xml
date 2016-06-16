@@ -80,7 +80,58 @@
                         <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.jfrog.buildinfo</groupId>
+                    <artifactId>artifactory-maven-plugin</artifactId>
+                    <version>2.2.2</version>
+                    <inherited>false</inherited>
+                    <executions>
+                        <execution>
+                            <id>build-info</id>
+                            <goals>
+                                <goal>publish</goal>
+                            </goals>
+                            <configuration>
+                                <deployProperties>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                </deployProperties>
+                                <publisher>
+                                    <contextUrl>https://repository.meplis.com/artifactory</contextUrl>
+                                    <username>${artifactory-user}</username>
+                                    <password>${artifactory-pass}</password>
+                                    <repoKey>libs-release-local</repoKey>
+                                    <snapshotRepoKey>libs-snapshot-local</snapshotRepoKey>
+                                </publisher>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>jar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <uniqueVersion>false</uniqueVersion>
+            <id>LibsMeplis</id>
+            <name>Meplis Repository</name>
+            <url>https://repository.meplis.com/artifactory/libs-release-local</url>
+            <layout>default</layout>
+        </repository>
+    </distributionManagement>
 </project>
